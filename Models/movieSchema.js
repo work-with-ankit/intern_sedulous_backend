@@ -6,10 +6,13 @@ const  movieSchema = new mongoose. Schema({
           require: true,
 
     },
-    
+
     movieType:{
         type: String
     },
+    cast:{
+        type:String
+    }
 
 
 },{timestamps:true});
