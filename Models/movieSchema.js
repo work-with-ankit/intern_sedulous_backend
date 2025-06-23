@@ -19,7 +19,7 @@ const reviewSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   }
-});
+},{_id:true});
 
 
 const  movieSchema = new mongoose. Schema({

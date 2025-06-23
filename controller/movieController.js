@@ -57,7 +57,7 @@ const deleteMovie = async (req , res)=>{
 };
 
 const addReview = async (req, res)=>{
-             try {
+             try { 
                 const { username, rating, comment}=req.body;
                 const movie = await Movie.findById(req.params.id);
                 if(!movie){
@@ -65,12 +65,49 @@ const addReview = async (req, res)=>{
                 }
                 movie.review.push({username, rating, comment});          
                await movie.save();
-                res.status(200).json({message:" add review succesfully "});
+                res.status(200).json({message:" add review succesfully ",movie});
              } catch (error) {
                 return res.status(500).json({message: "failed to review added or something went wrong", error: error.message})
                 
              }
 }
+
+const deleteReview = async(req, res)=>{
+
+   try {
+    const {movieId, reviewId}= req.params;
+    console.log(req.params.movieId);
+    
+     const movie= await Movie.findById(movieId);
+    if(!movie){
+        return res.status(401).json({message:"can't find movie"})
+    }
+
+    const reviewIndex= movie.review.findIndex(
+        (r) => r._id.toString() === reviewId
+    );
+
+    if(reviewIndex === -1){
+        return res.status(404).json({message:" review not found"});
+    }
+    
+    movie.review.splice(reviewIndex,1)
+     await movie.save();
+
+     res.status(200).json({message: "review delete successfully ", movie});
+
+
+    
+   } catch (error) {
+    console.log(error)  
+    return res.status(500).json({message:" internal server error",error: error.message});
+    
+   }
+
+}
+
+
+
 module.exports= {
     createMovie,
     getAllMovies,
@@ -78,4 +115,5 @@ module.exports= {
     updateMovie,
     deleteMovie,
     deleteMovie,
-    addReview }
+    addReview,
+deleteReview }
