@@ -22,7 +22,7 @@ const sendOtpController = async (req, res) => {
     specialChars: false,
   }));
 
-  const otpExpiry = new Date(Date.now() + 5 * 60 * 1000); // 5 min expiry
+  const otpExpiry = new Date(Date.now() + 5 * 60 * 1000); 
 
   try {
     await User.updateOne(

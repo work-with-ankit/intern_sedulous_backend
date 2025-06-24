@@ -94,7 +94,7 @@ const Login = async (req, res) => {
   }
 };
 
-//  Verify OTP and Login
+
 const verifyOtp = async (req, res) => {
     
   const { otp } = req.body;
